@@ -1,0 +1,18 @@
+INVOICE #INV-2023-001
+Date: October 24, 2023
+Vendor: TechStart Solutions Inc.
+
+Bill To:
+Acme Corp
+123 Business Rd.
+
+Description          | Qty | Unit Price | Total
+---------------------|-----|------------|-------
+Cloud Hosting (Oct)  |  1  | $150.00    | $150.00
+Maintenance Support  |  5  | $40.00     | $200.00
+Domain Renewal       |  2  | $15.00     | $30.00
+
+Subtotal: $380.00
+Tax (5%): $19.00
+TOTAL DUE: $399.00
+Currency: USD

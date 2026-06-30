@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unstructured-data-pipeline"
+version = "0.1.0"
+description = "Agentic pipeline that ingests unstructured data and writes it to SQLite."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "python-dotenv",
+    "langchain>=0.2",
+    "langchain-core>=0.2",
+    "langchain-google-genai>=2.0",
+    "langgraph>=0.2",
+    "pydantic>=2.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src/unstructured-data-pipeline"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]

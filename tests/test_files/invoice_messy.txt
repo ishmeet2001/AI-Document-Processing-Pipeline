@@ -1,0 +1,11 @@
+FWD: BILLING DETAILS --- URGENT
+vendor:   Office_Supplies_Co_LLC
+date: 11/02/23
+
+items list:
+1. Ergonomic Chairs (x4) - price per unit is 250 eur
+2. Standing Desk (x1) - price 500 eur
+3. box of pens - 10 units @ 5 eur each
+
+some notes: one chair arrived broken, waiting on refund.
+final amount to pay: 1550 EUR (tax included)
