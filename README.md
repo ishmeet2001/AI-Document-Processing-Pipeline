@@ -1,12 +1,12 @@
 # AI Document Processing Pipeline
 
-An intelligent agentic system powered by **LangChain** and **Google Gemini** that extracts structured data (such as invoices and clinical patient referrals) from unstructured text files and stores it in SQLite databases.
+An intelligent agentic system powered by **LangChain** and **Google Gemini** that extracts structured invoice data from unstructured text files and stores it in SQLite databases.
 
 ## Features
 
-- 🤖 **AI-Powered Extraction**: Leverages Google Gemini LLM to intelligently parse invoices and clinical referrals
+- 🤖 **AI-Powered Extraction**: Leverages Google Gemini LLM to intelligently parse invoices
 - 🔄 **Agentic Workflow**: Uses LangChain agents with tool calling for autonomous database operations
-- 📊 **Schema Validation**: Enforces strict Pydantic schemas (e.g., Invoice, PatientReferral) for robust data extraction
+- 📊 **Schema Validation**: Enforces strict Pydantic schemas (e.g., Invoice, ItemDetails) for robust data extraction
 - 💾 **SQLite Integration**: Automatically creates and populates relational databases with foreign key constraints
 - 🧵 **Concurrent Processing**: Multi-threaded file validation and reading for optimal performance
 - ✅ **Comprehensive Testing**: Full test suite with pytest
@@ -125,8 +125,6 @@ When prompted, use the following commands:
 - **Process an Invoice file**:
 
   ```
-  process invoice <path/to/invoice.txt> --db <path/to/output.db>
-  # or omit the schema type (defaults to invoice)
   process <path/to/invoice.txt> --db <path/to/output.db>
   ```
 
@@ -134,18 +132,6 @@ When prompted, use the following commands:
 
   ```
   process ../../tests/test_files/invoice_clean.txt --db ./saved_files/invoices.db
-  ```
-
-- **Process a Clinical Referral file**:
-
-  ```
-  process clinical <path/to/referral.txt> --db <path/to/output.db>
-  ```
-
-  Example:
-
-  ```
-  process ../../tests/test_files/referral_messy.txt --db ./saved_files/referrals.db
   ```
 
 - **Exit the program**:
@@ -236,19 +222,4 @@ ItemDetails:
   - Description: str
   - Quantity: str
   - Unit_price: int
-```
-
-### Clinical Referral Schema
-
-```python
-PatientReferral:
-  - Patient_Name: str
-  - DOB: date
-  - Referring_Physician: str
-  - Urgency: str
-  - Clinical_Notes: List[ClinicalNoteDetails]
-
-ClinicalNoteDetails:
-  - Symptom: str
-  - Duration: str
 ```

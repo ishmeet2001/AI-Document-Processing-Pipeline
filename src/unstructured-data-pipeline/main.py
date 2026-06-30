@@ -3,20 +3,18 @@ from infrastructure.CLI.main import read_files
 from config import COMMAND
 from domain.prompts.human_instructions import human_template
 from domain.schema.invoice import Invoice, ItemDetails
-from domain.schema.clinical import PatientReferral, ClinicalNoteDetails
 
-# Initialize both agents at startup
+# Initialize the invoice agent at startup
 invoice_agent = create_agent_instance(Invoice, ItemDetails)
-clinical_agent = create_agent_instance(PatientReferral, ClinicalNoteDetails)
 
-print("=====Welcome to Unstructured Data Pipeline======")
+print("===== Welcome to AI Document Processing Pipeline (Invoices) =====")
 print("For help type Commands")
 
 while(True):
     command=input()
     if command.strip()=="Commands":
         print("Exit")
-        print("process [invoice|clinical] <input_path> --db <output_db_path>")
+        print("process <input_path> --db <output_db_path>")
         print("Default command pattern: " + str(COMMAND))
     elif command.strip()=="Exit":
         break
@@ -35,26 +33,15 @@ while(True):
             parts = command_str.split("--db")
             
             if len(parts) != 2:
-                print("Invalid command format. Expected: process [schema_type] <input_path> --db <output_db_path>")
+                print("Invalid command format. Expected: process <input_path> --db <output_db_path>")
                 continue
             
             input_part = parts[0].strip()
             if input_part.lower().startswith("process"):
-                args_part = input_part[7:].strip()  
+                input_path = input_part[7:].strip()  
             else:
                 print("Invalid command format.")
                 continue
-            
-            # Parse schema_type and input_path (backward compatible: defaults to invoice)
-            schema_type = "invoice"
-            input_path = args_part
-            
-            if args_part.lower().startswith("invoice "):
-                schema_type = "invoice"
-                input_path = args_part[8:].strip()
-            elif args_part.lower().startswith("clinical "):
-                schema_type = "clinical"
-                input_path = args_part[9:].strip()
             
             # Extract output database path
             output_db_path = parts[1].strip() if parts[1].strip() else None
@@ -68,12 +55,9 @@ while(True):
             if output_db_path:
                 output_db_path = output_db_path.strip('"').strip("'")
             
-            print(f"Mode: {schema_type.upper()}")
+            print(f"Mode: INVOICE")
             print(f"Input path: {input_path}")
             print(f"Output DB path: {output_db_path}")
-            
-            # Select the appropriate agent
-            react_agent = clinical_agent if schema_type == "clinical" else invoice_agent
             
             # Read and validate files
             file_contents = read_files([input_path] if type(input_path) == str else input_path)
@@ -89,7 +73,7 @@ while(True):
                         output_db_path=output_db_path,
                     )
             
-                    response = react_agent.invoke(
+                    response = invoice_agent.invoke(
                         {"messages":formatted_template},
                         config={"configurable": {"thread_id": "1"}}
                     )

@@ -134,24 +134,6 @@ def test_read_files_stateless_sequential_calls(test_environment, tmp_path):
     assert result_2 == {"content B"}
 
 
-def test_clinical_schema_validation():
-    clinical = reload_module("domain.schema.clinical")
 
-    data = {
-        "Patient_Name": "Jane Alice Doe",
-        "DOB": "1980-05-12",
-        "Referring_Physician": "Dr. Evelyn Vance, MD",
-        "Urgency": "Semi-Urgent",
-        "Clinical_Notes": [
-            {"Symptom": "Exertional Palpitations", "Duration": "6 months"},
-            {"Symptom": "Chest tightness", "Duration": "2 weeks"}
-        ]
-    }
-
-    referral = clinical.PatientReferral(**data)
-    assert referral.Patient_Name == "Jane Alice Doe"
-    assert referral.DOB.year == 1980
-    assert len(referral.Clinical_Notes) == 2
-    assert referral.Clinical_Notes[0].Symptom == "Exertional Palpitations"
 
 
